@@ -61,6 +61,23 @@ class Document {
         str += lines[i].substring(start, end);
       }
     }
+    validateCursor();
     return str;
   }
+
+  void insertText(String text) {
+    String str = lines[cursor.line];
+    lines[cursor.line] = "${str.substring(cursor.column)}$text${str.substring(cursor.column, str.length)}";
+    cursor.column += text.length;
+  }
+
+  void deleteText({int numberOfCharacters = 1}) {
+    String str = lines[cursor.line];
+    lines[cursor.line] = "${str.substring(cursor.column - numberOfCharacters + 1)}${str.substring(cursor.column + 1, str.length)}";
+  }
+
+  // todo: use flutter/services for clipboard access
+  void copy() {}
+  void cut() {}
+  void paste() {}
 }
